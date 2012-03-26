@@ -5,8 +5,9 @@ var Player_Controller = (function() {
 	var rotationLoop = null;
 	var shooterRotatedDeg = 0;
 	var chamberBubble = null;
+	var shooterBall = null;
 
-	var move_left = function() {
+	var moveToLeft = function() {
 		if (currentStatus !== 'left') {
 			currentStatus = 'left';
 
@@ -35,6 +36,11 @@ var Player_Controller = (function() {
 	};
 
 	var shoot = function() {
+		chargeChamberBall();
+
+		targetPoint = shooterBall.calcBounce(shooterRotatedDeg);
+		shooterBall.moveTo(targetPoint.x, targetPoint.y);
+
 		penguin.animate({
 			from: 20,
 			to: 49});
@@ -42,7 +48,7 @@ var Player_Controller = (function() {
 		currentStatus = null;
 	};
 
-	var move_right = function() {
+	var moveToRight = function() {
 		if (currentStatus !== 'right') {
 			currentStatus = 'right';
 
@@ -51,7 +57,7 @@ var Player_Controller = (function() {
 		}
 	};
 
-	var move_center = function() {
+	var moveToCenter = function() {
 		if (currentStatus == 'right') {
 			penguin.animate({
 				from: 71,
@@ -68,10 +74,17 @@ var Player_Controller = (function() {
 	};
 
 	var addNewBubbleToChamber = function() {
+		shooterBall = chamberBubble;
+
 		chamberBubble = new Bullble_Controller(
+			0,
+			config.shooter.top + config.shooter.height - 10);
+
+		chamberBubble.bootstrap();
+
+		chamberBubble.moveTo(
 			config.shooter.left + (config.shooter.width / 2) - (config.bubbles.width / 2),
 			config.shooter.top + config.shooter.height - 10);
-		chamberBubble.bootstrap();
 	};
 
 	var chargeChamberBall = function() {
@@ -85,7 +98,6 @@ var Player_Controller = (function() {
 			function() {
 				addNewBubbleToChamber();
 			});
-
 	};
 
 	return {
@@ -110,7 +122,6 @@ var Player_Controller = (function() {
 			rotateObserver();
 
 			document.addEventListener('keydown', function(inEvent) {
-				console.log(inEvent.keyCode);
 				switch (inEvent.keyCode) {
 					case 38:
 					case 32:
@@ -118,17 +129,17 @@ var Player_Controller = (function() {
 						break;
 
 					case 37:
-						move_left();
+						moveToLeft();
 						break;
 
 					case 39:
-						move_right();
+						moveToRight();
 						break;
 				}
 			});
 
 			document.addEventListener('keyup', function(inEvent) {
-				move_center();
+				moveToCenter();
 			});
 		}
 	};

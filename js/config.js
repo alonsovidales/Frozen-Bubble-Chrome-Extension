@@ -12,6 +12,25 @@ var config = {
 		left: 190
 	},
 
+	ballsField: {
+		topLeft: {
+			x: 197,
+			y: 12
+		},
+		topRight: {
+			x: 455,
+			y: 10
+		},
+		bottLeft: {
+			x: 197,
+			y: 390
+		},
+		bottRight: {
+			x: 455,
+			y: 390
+		}
+	},
+
 	shooter: {
 		top: 364,
 		left: 275,
@@ -40,6 +59,7 @@ var config = {
 		totalTypes: 8,
 		width: 32,
 		height: 32,
-		loopTime: 10
+		loopTime: 5,
+		steepPx: 6 
 	}
 };
