@@ -3,10 +3,10 @@
 	"description": "A JavaScript version of the classic game",
 	"version": "0.0.0.1",
 	"icons": {
-		"16": "img/icons/frozen_16x16.png",
-		"32": "img/icons/frozen_32x32.png",
-		"48": "img/icons/frozen_48x48.png",
-		"128": "img/icons/frozen_128x128.png"
+		"16": "img/icons/frozen_16_16.png",
+		"32": "img/icons/frozen_32_32.png",
+		"48": "img/icons/frozen_48_48.png",
+		"128": "img/icons/frozen_128_128.png"
 	},
 	"browser_action": {
 		"default_icon": "img/icons/default.png",

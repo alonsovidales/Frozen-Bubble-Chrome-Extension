@@ -1,0 +1,48 @@
+/**
+  * Author: Alonso Vidales <alonso.vidales@tras2.es>
+  * Date: 2012-02-13
+  */
+
+html, body {
+	background: #000000;
+}
+
+div#main_canvas {
+	width: 640px;
+	height: 480px;
+}
+
+/**
+  * Penguins styles
+  */
+.penguin {
+	background-image: url('../img/penguins/shooters.png');
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 80px;
+	height: 60px;
+	z-index: 100;
+}
+
+div.game_background {
+	background-image: url('../img/backgrounds/back_one_player.png');
+	background-repeat: no-repeat;
+}
+
+.shooter {
+	background-image: url('../img/shooter/shooter.png');
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	z-index: 100;
+}
+
+.bubble {
+	background-image: url('../img/bubbles/bubbles.gif');
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	z-index: 50;
+}
