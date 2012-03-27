@@ -46,3 +46,21 @@ div.game_background {
 	height: 32px;
 	z-index: 50;
 }
+
+.compressor {
+	background-image: url('../img/compressor/compressor_main.png');
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 252px;
+	height: 51px;
+	z-index: 50;
+}
+
+.compressor_extender {
+	background-image: url('../img/compressor/compressor_ext.png');
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 188px;
+	height: 28px;
+	z-index: 50;
+}

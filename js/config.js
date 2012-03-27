@@ -61,5 +61,22 @@ var config = {
 		height: 32,
 		loopTime: 5,
 		steepPx: 6 
+	},
+
+	compressor: {
+		x: 200,
+		initY: -3,
+		baseLoopTime: 5000,
+		width: 252,
+		height: 51,
+		extensor: {
+			x: 233,
+			width: 188,
+			height: 28,
+		}
+	},
+
+	bubblesGrid: {
+		x: 198,
 	}
 };

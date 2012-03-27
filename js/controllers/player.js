@@ -1,4 +1,5 @@
-var Player_Controller = (function() {
+var Player_Controller = (function(inCompressor) {
+	var compressor = inCompressor;
 	var penguin = null;
 	var shooter = null;
 	var currentStatus = null;
@@ -38,8 +39,10 @@ var Player_Controller = (function() {
 	var shoot = function() {
 		chargeChamberBall();
 
-		targetPoint = shooterBall.calcBounce(shooterRotatedDeg);
-		shooterBall.moveTo(targetPoint.x, targetPoint.y);
+		if (shooterBall !== null) {
+			shooterBall.shoot(shooterRotatedDeg, compressor);
+		}
+		shooterBall = null;
 
 		penguin.animate({
 			from: 20,
@@ -80,7 +83,7 @@ var Player_Controller = (function() {
 			0,
 			config.shooter.top + config.shooter.height - 10);
 
-		chamberBubble.bootstrap();
+		chamberBubble.init();
 
 		chamberBubble.moveTo(
 			config.shooter.left + (config.shooter.width / 2) - (config.bubbles.width / 2),
@@ -101,9 +104,9 @@ var Player_Controller = (function() {
 	};
 
 	return {
-		bootstrap: function() {
+		init: function() {
 			shooter = new AnimatedImage_Tool('shooter');
-			shooter.bootstrap();
+			shooter.init();
 			shooter.setPos(config.shooter.left, config.shooter.top);
 			shooter.show();
 
@@ -111,10 +114,9 @@ var Player_Controller = (function() {
 				'penguin',
 				19,
 				config.player.imageAttr.loopTime,
-				config.player.imageAttr.images,
-				config.player.imageAttr.width);
+				config.player.imageAttr.images);
 
-			penguin.bootstrap();
+			penguin.init();
 			penguin.setPos(config.player.left, config.player.top);
 			penguin.show();
 
