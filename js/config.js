@@ -59,14 +59,14 @@ var config = {
 		totalTypes: 8,
 		width: 32,
 		height: 32,
-		loopTime: 5,
-		steepPx: 6 
+		loopTime: 3,
+		steepPx: 3
 	},
 
 	compressor: {
 		x: 200,
 		initY: -3,
-		baseLoopTime: 5000,
+		baseLoopTime: 5000000,
 		width: 252,
 		height: 51,
 		extensor: {
@@ -78,5 +78,7 @@ var config = {
 
 	bubblesGrid: {
 		x: 198,
+		heightCorrection: 4,
+		minBubblesToBeConsideredAsGroup: 3
 	}
 };
