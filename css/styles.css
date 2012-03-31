@@ -12,6 +12,10 @@ div#main_canvas {
 	height: 480px;
 }
 
+.hd {
+	display: none;
+}
+
 /**
   * Penguins styles
   */

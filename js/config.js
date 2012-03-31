@@ -77,6 +77,7 @@ var config = {
 	},
 
 	bubblesGrid: {
+		moveDestroyAnimation: 40,
 		x: 198,
 		heightCorrection: 4,
 		minBubblesToBeConsideredAsGroup: 3
