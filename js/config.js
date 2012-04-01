@@ -66,7 +66,8 @@ var config = {
 	compressor: {
 		x: 200,
 		initY: -3,
-		baseLoopTime: 5000,
+		baseLoopTime: 15000,
+		timeToDecreaseByLevel: 1500,
 		width: 252,
 		height: 51,
 		extensor: {

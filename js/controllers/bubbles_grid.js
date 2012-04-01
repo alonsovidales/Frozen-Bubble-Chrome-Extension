@@ -134,10 +134,10 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc) {
 				bubblesToRemove = {};
 				downGroup(bubblesInGroup);
 				removeBalls();
-			}
-		} else {
-			if (checkBallOutOfLimits(inBubbleInfo)) {
-				inGameOverFunc();
+			} else {
+				if (checkBallOutOfLimits(inBubbleInfo)) {
+					inGameOverFunc();
+				}
 			}
 		}
 	};

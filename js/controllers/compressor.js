@@ -3,6 +3,7 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc) {
 	var compressorImg = null;
 	var currentPos = 1;
 	var compressorMainLoop = null;
+	var level = 1;
 
 	var advance = function() {
 		var extensor = new AnimatedImage_Tool('compressor_extender');
@@ -16,7 +17,7 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc) {
 
 		currentPos++;
 
-		compressorMainLoop = setTimeout(advance, config.compressor.baseLoopTime);
+		compressorMainLoop = setTimeout(advance, config.compressor.baseLoopTime - (level * config.compressor.timeToDecreaseByLevel));
 
 		if (bubblesGrid.checkIfOutOfLimits()) {
 			inGameOverFunc();
@@ -40,6 +41,7 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc) {
 		},
 
 		init: function(inLevel) {
+			level = inLevel;
 			bubblesGrid = new BubblesGrid_Controller(inWinFunc, inGameOverFunc);
 
 			compressorImg = new AnimatedImage_Tool('compressor');
