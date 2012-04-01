@@ -86,3 +86,28 @@ div.game_background {
 .font.char {
 	background-image: url('../img/fonts/font.png');
 }
+
+.alert {
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 130px;
+	z-index: 10000;
+}
+
+.alert.loser {
+	background-image: url('../img/alerts/loser.png');
+	width: 345px;
+	height: 124px;
+}
+
+.alert.winner {
+	background-image: url('../img/alerts/winner.png');
+	width: 329px;
+	height: 159px;
+}
+
+.alert.hurry {
+	background-image: url('../img/alerts/hurry.png');
+	width: 244px;
+	height: 102px;
+}

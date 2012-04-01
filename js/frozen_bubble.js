@@ -3,7 +3,7 @@ var FrozenBubble = (function() {
 		bootstrap: function () {
 			window.onload = function () {
 				var game = new Game_Controller();
-				game.init(5);
+				game.init(1);
 			};
 		}
 	};
