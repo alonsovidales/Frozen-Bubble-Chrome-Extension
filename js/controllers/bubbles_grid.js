@@ -43,6 +43,24 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		}
 	};
 
+	var isBubbleSupported = function(inBubbleInfo, inRightCheck) {
+		var bubbleAtLateral = bubbles[(inBubbleInfo.row) + '-' + (inBubbleInfo.col - 1)];
+		if (inRightCheck) {
+			bubbleAtLateral = bubbles[(inBubbleInfo.row) + '-' + (inBubbleInfo.col + 1)];
+		}
+		var bubbleTopLeft = bubbles[(inBubbleInfo.row - 1) + '-' + (inBubbleInfo.col - 0.5)];
+		var bubbleTopRight = bubbles[(inBubbleInfo.row - 1) + '-' + (inBubbleInfo.col + 0.5)];
+
+		if (
+			(inBubbleInfo.row === 0) ||
+			(bubbleTopLeft !== undefined) ||
+			(bubbleTopRight !== undefined) ||
+			((bubbleAtLateral !== undefined) && isBubbleSupported(bubbleAtLateral, inRightCheck)))
+			return true;
+		else
+			return false;
+	};
+
 	var downGroup = function(inParentGroup) {
 		var bubblesToAdd = {};
 
@@ -59,13 +77,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		for (bubble in bubbles) {
 			var bubbleToCheck = bubbles[bubble];
 
-			if (
-				(bubbleToCheck.row !== 0) &&
-				(bubbles[(bubbleToCheck.row) + '-' + (bubbleToCheck.col - 1)] === undefined) &&
-				(bubbles[(bubbleToCheck.row) + '-' + (bubbleToCheck.col + 1)] === undefined) &&
-				(bubbles[(bubbleToCheck.row - 1) + '-' + (bubbleToCheck.col - 0.5)] === undefined) &&
-				(bubbles[(bubbleToCheck.row - 1) + '-' + (bubbleToCheck.col + 0.5)] === undefined)) {
-
+			if (!isBubbleSupported(bubbles[bubble], true) && !isBubbleSupported(bubbles[bubble], false)) {
 				bubblesToAdd[bubble] = bubbleToCheck;
 			}
 		}
