@@ -1,4 +1,4 @@
-var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc) {
+var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameController) {
 	var bubbles = {};
 	var bubblesTmp = null;
 	var bubblesInGroup = 0;
@@ -6,10 +6,10 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc) {
 	var baseY = 0;
 
 	var removeBalls = function() {
-		console.log('bubblesToRemove');
-		console.log(bubblesToRemove);
 		var minX = 999999;
 		var maxX = 0;
+
+		inGameController.addToScore(Object.keys(bubblesToRemove).length * config.scoreBoard.pointsByBubble);
 
 		for (bubble in bubblesToRemove) {
 			var image = bubblesToRemove[bubble].getImage();

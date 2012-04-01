@@ -1,4 +1,4 @@
-var Compressor_Controller = (function(inWinFunc, inGameOverFunc) {
+var Compressor_Controller = (function(inWinFunc, inGameOverFunc, inGameController) {
 	var bubblesGrid = null;
 	var compressorImg = null;
 	var currentPos = 1;
@@ -42,7 +42,7 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc) {
 
 		init: function(inLevel) {
 			level = inLevel;
-			bubblesGrid = new BubblesGrid_Controller(inWinFunc, inGameOverFunc);
+			bubblesGrid = new BubblesGrid_Controller(inWinFunc, inGameOverFunc, inGameController);
 
 			compressorImg = new AnimatedImage_Tool('compressor');
 			compressorImg.init();

@@ -136,6 +136,15 @@ var Text_Tool = (function (inText){
 	};
 
 	return {
+		setText: function(inText) {
+			containerDiv.innerHTML = '';
+			leftPadPx = 0;
+
+			for (var count = 0; count < inText.length; count++) {
+				addLetter(inText[count]);
+			}
+		},
+
 		init: function(inX, inY) {
 			var mainCanvas = document.getElementById(config.gameCanvas.id);
 			containerDiv = document.createElement("div");
@@ -146,8 +155,8 @@ var Text_Tool = (function (inText){
 
 			mainCanvas.appendChild(containerDiv);
 
-			for (var count = 0; count < inText.length; count++) {
-				addLetter(inText[count]);
+			if (inText !== undefined) {
+				this.setText(inText);
 			}
 		}
 	};

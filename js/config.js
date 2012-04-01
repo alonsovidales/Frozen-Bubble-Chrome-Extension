@@ -82,5 +82,10 @@ var config = {
 		x: 198,
 		heightCorrection: 4,
 		minBubblesToBeConsideredAsGroup: 3
+	},
+
+	scoreBoard: {
+		pointsByLevel: 100,
+		pointsByBubble: 5
 	}
 };
