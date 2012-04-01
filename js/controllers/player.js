@@ -7,6 +7,7 @@ var Player_Controller = (function(inCompressor) {
 	var shooterRotatedDeg = 0;
 	var chamberBubble = null;
 	var shooterBall = null;
+	var stopped = false;
 
 	var moveToLeft = function() {
 		if (currentStatus !== 'left') {
@@ -104,6 +105,32 @@ var Player_Controller = (function(inCompressor) {
 	};
 
 	return {
+		win: function() {
+			if (!stopped) {
+				stopped = true;
+				clearTimeout(rotationLoop);
+				penguin.setClass('winner');
+
+				penguin.animate({
+					from: 1,
+					to: 68,
+					type: 'loop'
+				});
+			}
+		},
+
+		gameOver: function() {
+			if (!stopped) {
+				stopped = true;
+				clearTimeout(rotationLoop);
+				penguin.setClass('looser');
+				penguin.animate({
+					from: 1,
+					to: 157
+				});
+			}
+		},
+
 		init: function() {
 			shooter = new AnimatedImage_Tool('shooter');
 			shooter.init();
@@ -124,19 +151,21 @@ var Player_Controller = (function(inCompressor) {
 			rotateObserver();
 
 			document.addEventListener('keydown', function(inEvent) {
-				switch (inEvent.keyCode) {
-					case 38:
-					case 32:
-						shoot();
-						break;
-
-					case 37:
-						moveToLeft();
-						break;
-
-					case 39:
-						moveToRight();
-						break;
+				if (!stopped) {
+					switch (inEvent.keyCode) {
+						case 38:
+						case 32:
+							shoot();
+							break;
+	
+						case 37:
+							moveToLeft();
+							break;
+	
+						case 39:
+							moveToRight();
+							break;
+					}
 				}
 			});
 

@@ -28,6 +28,14 @@ div#main_canvas {
 	z-index: 100;
 }
 
+.penguin.looser {
+	background-image: url('../img/penguins/looser.png');
+}
+
+.penguin.winner {
+	background-image: url('../img/penguins/win.png');
+}
+
 div.game_background {
 	background-image: url('../img/backgrounds/back_one_player.png');
 	background-repeat: no-repeat;
@@ -67,4 +75,14 @@ div.game_background {
 	width: 188px;
 	height: 28px;
 	z-index: 50;
+}
+
+.font {
+	background-repeat: no-repeat;
+	position: absolute;
+	z-index: 50;
+}
+
+.font.char {
+	background-image: url('../img/fonts/font.png');
 }
