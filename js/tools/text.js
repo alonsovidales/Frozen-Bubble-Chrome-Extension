@@ -136,6 +136,12 @@ var Text_Tool = (function (inText){
 	};
 
 	return {
+		addLink: function(inFunction) {
+			containerDiv.classList.add('text_link');
+
+			containerDiv.addEventListener('click', inFunction);
+		},
+
 		setText: function(inText) {
 			containerDiv.innerHTML = '';
 			leftPadPx = 0;

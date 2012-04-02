@@ -89,7 +89,11 @@ div.game_background {
 .font {
 	background-repeat: no-repeat;
 	position: absolute;
-	z-index: 50;
+	z-index: 99999;
+}
+
+.text_link {
+	cursor: pointer;
 }
 
 .font.char {
@@ -111,6 +115,12 @@ div.game_background {
 
 .alert.winner {
 	background-image: url('../img/alerts/winner.png');
+	width: 329px;
+	height: 159px;
+}
+
+.alert.winner_last_level {
+	background-image: url('../img/alerts/win_last_level.png');
 	width: 329px;
 	height: 159px;
 }

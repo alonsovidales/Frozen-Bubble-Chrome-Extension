@@ -138,8 +138,10 @@ var Player_Controller = (function(inCompressor) {
 
 				stopped = true;
 				clearTimeout(rotationLoop);
-				penguin.setClass('winner');
+				clearTimeout(hurryTimeout);
+				clearTimeout(alertTimeout);
 
+				penguin.setClass('winner');
 				penguin.animate({
 					from: 1,
 					to: 68,
@@ -154,6 +156,9 @@ var Player_Controller = (function(inCompressor) {
 
 				stopped = true;
 				clearTimeout(rotationLoop);
+				clearTimeout(hurryTimeout);
+				clearTimeout(alertTimeout);
+
 				penguin.setClass('looser');
 				penguin.animate({
 					from: 1,

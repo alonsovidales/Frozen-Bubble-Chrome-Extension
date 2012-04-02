@@ -4,6 +4,10 @@ var config = {
 		height: 480
 	},
 
+	game: {
+		totalLevels: 7
+	},
+
 	gameCanvas: {
 		id: 'main_canvas',
 		width: 255,

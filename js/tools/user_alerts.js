@@ -23,7 +23,7 @@ var UserAlerts_Tool = (function() {
 			divElm.classList.add('hd');
 		},
 
-		showAlert: function(inClass, inFlash) {
+		showAlert: function(inClass, inFlash, inButtonText, inButtonFunc) {
 			var mainCanvas = document.getElementById(config.gameCanvas.id);
 
 			divElm = document.createElement("div");
@@ -39,6 +39,12 @@ var UserAlerts_Tool = (function() {
 				imageShowed = true;
 
 				flashLoop = setTimeout(flashImage, 300);
+			}
+
+			if ((inButtonText !== undefined) && (inButtonText !== '')) {
+				var levelText = new Text_Tool(inButtonText);
+				levelText.init(xPos + 125, 240);
+				levelText.addLink(inButtonFunc);
 			}
 		}
 	};

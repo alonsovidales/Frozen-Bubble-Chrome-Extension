@@ -45,18 +45,22 @@ var Game_Controller = (function() {
 		win: function() {
 			compressor.stop();
 			player.win();
-			UserAlerts_Tool.showAlert('winner', false);
 
 			setScore(currentScore + config.scoreBoard.pointsByLevel);
 			saveScore();
 
-			setTimeout(function() {
-				my.init(currentLevel + 1);
-			}, 3000);
+			if (currentLevel == config.game.totalLevels) {
+				UserAlerts_Tool.showAlert('winner_last_level', false, 'restart game', my.resetAll);
+			} else {
+				UserAlerts_Tool.showAlert('winner', false);
+
+				setTimeout(function() {
+					my.init(currentLevel + 1);
+				}, 3000);
+			}
 		},
 
 		gameOver: function() {
-			console.log('GameOver');
 			UserAlerts_Tool.showAlert('loser', false);
 			compressor.gameOver();
 			player.gameOver();
@@ -68,7 +72,7 @@ var Game_Controller = (function() {
 
 		resetAll: function() {
 			localStorage.clear();
-			this.init();
+			my.init();
 		},
 
 		init: function (inLevel) {
