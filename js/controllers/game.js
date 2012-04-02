@@ -43,7 +43,6 @@ var Game_Controller = (function() {
 		},
 
 		win: function() {
-			console.log('Win');
 			compressor.stop();
 			player.win();
 			UserAlerts_Tool.showAlert('winner', false);

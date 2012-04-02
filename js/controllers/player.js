@@ -38,6 +38,8 @@ var Player_Controller = (function(inCompressor) {
 	};
 
 	var shoot = function() {
+		SoundManager_Tool.play(config.player.shotSnd);
+
 		chargeChamberBall();
 
 		if (shooterBall !== null) {
@@ -107,6 +109,8 @@ var Player_Controller = (function(inCompressor) {
 	return {
 		win: function() {
 			if (!stopped) {
+				SoundManager_Tool.play(config.player.winSnd);
+
 				stopped = true;
 				clearTimeout(rotationLoop);
 				penguin.setClass('winner');
@@ -121,6 +125,8 @@ var Player_Controller = (function(inCompressor) {
 
 		gameOver: function() {
 			if (!stopped) {
+				SoundManager_Tool.play(config.player.gameOverSnd);
+
 				stopped = true;
 				clearTimeout(rotationLoop);
 				penguin.setClass('looser');

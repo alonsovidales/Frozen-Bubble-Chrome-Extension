@@ -23,6 +23,8 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			}
 		}
 
+		SoundManager_Tool.play(config.bubblesGrid.destroyGroupSnd);
+
 		for (bubble in bubblesToRemove) {
 			var image = bubblesToRemove[bubble].getImage();
 			var bubbleObj = bubblesToRemove[bubble];
@@ -117,7 +119,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 	};
 
 	var moveToCell = function(inBubbleInfo, inSlice, inCheckGroup) {
-		inBubbleInfo.bubble.getImage().setText(inBubbleInfo.col + ' - ' + inBubbleInfo.row);
+		//inBubbleInfo.bubble.getImage().setText(inBubbleInfo.col + ' - ' + inBubbleInfo.row);
 
 		if (inSlice) {
 			inBubbleInfo.bubble.getImage().moveTo(
@@ -147,6 +149,8 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 				downGroup(bubblesInGroup);
 				removeBalls();
 			} else {
+				SoundManager_Tool.play(config.bubblesGrid.stickBubbleSnd);
+
 				if (checkBallOutOfLimits(inBubbleInfo)) {
 					inGameOverFunc();
 				}

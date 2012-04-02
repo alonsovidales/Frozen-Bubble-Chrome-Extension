@@ -29,7 +29,10 @@ var levels = {
 	}],
 	2: [{
 		row: 0,
-		col: 0
+		col: 4
+	}, {
+		row: 0,
+		col: 3
 	}, {
 		row: 1,
 		col: 0.5
@@ -78,7 +81,7 @@ var levels = {
 	}],
 	3: [{
 		row: 0,
-		col: 1
+		col: 2
 	}, {
 		row: 1,
 		col: 1.5
@@ -92,10 +95,10 @@ var levels = {
 		row: 4,
 		col: 3
 	}, {
-		row: 5,
+		row: 3,
 		col: 3.5
 	}, {
-		row: 5,
+		row: 3,
 		col: 4.5
 	}, {
 		row: 4,
@@ -111,7 +114,7 @@ var levels = {
 		col: 6.5
 	}, {
 		row: 0,
-		col: 7
+		col: 6
 	}],
 	4: [{
 		row: 0,

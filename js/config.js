@@ -52,6 +52,9 @@ var config = {
 		},
 		top: 428,
 		left: 412,
+		winSnd: 'snd/win.ogg',
+		gameOverSnd: 'snd/lose.ogg',
+		shotSnd: 'snd/launch.ogg',
 		rotationSpeedLoop: 10
 	},
 
@@ -66,7 +69,7 @@ var config = {
 	compressor: {
 		x: 200,
 		initY: -3,
-		baseLoopTime: 15000,
+		baseLoopTime: 30000,
 		timeToDecreaseByLevel: 1500,
 		width: 252,
 		height: 51,
@@ -81,7 +84,9 @@ var config = {
 		moveDestroyAnimation: 40,
 		x: 198,
 		heightCorrection: 4,
-		minBubblesToBeConsideredAsGroup: 3
+		minBubblesToBeConsideredAsGroup: 3,
+		stickBubbleSnd: 'snd/stick.ogg',
+		destroyGroupSnd: 'snd/destroy_group.ogg'
 	},
 
 	scoreBoard: {
