@@ -96,8 +96,21 @@ div.game_background {
 	cursor: pointer;
 }
 
+.font.hi {
+	background-image: url('../img/fonts/font-hi.png');
+}
+
 .font.char {
 	background-image: url('../img/fonts/font.png');
+}
+
+.credits_background {
+	background-image: url('../img/fonts/text_background.png');
+	position: absolute;
+	top: 428px;
+	left: 8px;
+	width: 217px;
+	height: 60px;
 }
 
 .alert {

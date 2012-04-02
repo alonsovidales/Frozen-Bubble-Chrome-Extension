@@ -1,4 +1,6 @@
 var config = {
+	cvLink: 'http://es.linkedin.com/pub/alonso-vidales/6/a9b/225',
+
 	windowConf: {
 		width: 640,
 		height: 480
@@ -62,7 +64,7 @@ var config = {
 		winSnd: 'snd/win.ogg',
 		gameOverSnd: 'snd/lose.ogg',
 		shotSnd: 'snd/launch.ogg',
-		rotationSpeedLoop: 5
+		rotationSpeedLoop: 8
 	},
 
 	bubbles: {

@@ -1,4 +1,4 @@
-var Text_Tool = (function (inText){
+var Text_Tool = (function (inText, inFontType){
 	var letters = {
 		a: {
 			x: 526,
@@ -123,7 +123,11 @@ var Text_Tool = (function (inText){
 		divElm.classList.add('font');
 
 		if (inChar != ' ') {
-			divElm.classList.add('char');
+			if (inFontType == 'hi') {
+				divElm.classList.add('hi');
+			} else {
+				divElm.classList.add('char');
+			}
 			divElm.style.setProperty('background-position', '-' + letters[inChar].x + 'px -1px', '!important');
 		}
 

@@ -37,6 +37,21 @@ var Game_Controller = (function() {
 		return parseInt(score, 10);
 	};
 
+	var showCredits = function() {
+		var backgroundDiv = document.createElement("div");
+		backgroundDiv.classList.add('credits_background');
+		mainCanvas.appendChild(backgroundDiv);
+
+		var credits = new Text_Tool('created by:');
+		credits.init(18, 437);
+		credits = new Text_Tool('alonso vidales');
+		credits.init(18, 457);
+		credits.addLink(function (){
+			chrome.tabs.create({'url': config.cvLink});
+			window.close();
+		});
+	};
+
 	var my = {
 		addToScore: function(inPoints) {
 			setScore(currentScore + inPoints);
@@ -106,6 +121,8 @@ var Game_Controller = (function() {
 
 			player = new Player_Controller(compressor);
 			player.init();
+
+			showCredits();
 		}
 	};
 
