@@ -6,6 +6,8 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc, inGameControlle
 	var level = 1;
 
 	var advance = function() {
+		SoundManager_Tool.play(config.compressor.newRootSnd);
+
 		var extensor = new AnimatedImage_Tool('compressor_extender');
 		extensor.init();
 		extensor.setPos(config.compressor.extensor.x, ((currentPos - 1) * config.compressor.extensor.height));

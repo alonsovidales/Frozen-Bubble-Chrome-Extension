@@ -73,6 +73,7 @@ var config = {
 		timeToDecreaseByLevel: 1500,
 		width: 252,
 		height: 51,
+		newRootSnd: 'snd/new_root.ogg',
 		extensor: {
 			x: 233,
 			width: 188,
