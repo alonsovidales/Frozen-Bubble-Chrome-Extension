@@ -16,6 +16,13 @@ var UserAlerts_Tool = (function() {
 	};
 
 	return {
+		removeAlert: function() {
+			if (flashLoop !== null) {
+				clearTimeout(flashLoop);
+			}
+			divElm.classList.add('hd');
+		},
+
 		showAlert: function(inClass, inFlash) {
 			var mainCanvas = document.getElementById(config.gameCanvas.id);
 

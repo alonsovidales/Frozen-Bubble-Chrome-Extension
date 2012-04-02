@@ -59,6 +59,15 @@ div.game_background {
 	z-index: 50;
 }
 
+.bubble_frozzen {
+	background-image: url('../img/bubbles/bubble_lose.png');
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 34px;
+	height: 48px;
+	z-index: 60;
+}
+
 .compressor {
 	background-image: url('../img/compressor/compressor_main.png');
 	background-repeat: no-repeat;

@@ -58,12 +58,17 @@ var Game_Controller = (function() {
 		gameOver: function() {
 			console.log('GameOver');
 			UserAlerts_Tool.showAlert('loser', false);
-			compressor.stop();
+			compressor.gameOver();
 			player.gameOver();
 
 			setTimeout(function() {
 				my.init(currentLevel);
 			}, 3000);
+		},
+
+		resetAll: function() {
+			localStorage.clear();
+			this.init();
 		},
 
 		init: function (inLevel) {

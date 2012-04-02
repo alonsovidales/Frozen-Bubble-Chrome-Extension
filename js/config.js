@@ -52,10 +52,13 @@ var config = {
 		},
 		top: 428,
 		left: 412,
+		timeToShoot: 5000,
+		timeToShowHurry: 2000,
+		hurrySnd: 'snd/hurry.ogg',
 		winSnd: 'snd/win.ogg',
 		gameOverSnd: 'snd/lose.ogg',
 		shotSnd: 'snd/launch.ogg',
-		rotationSpeedLoop: 10
+		rotationSpeedLoop: 5
 	},
 
 	bubbles: {

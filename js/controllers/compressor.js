@@ -31,6 +31,11 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc, inGameControlle
 			clearTimeout(compressorMainLoop);
 		},
 
+		gameOver: function() {
+			bubblesGrid.frozeAllTheBubbles();
+			clearTimeout(compressorMainLoop);
+		},
+
 		checkCollision: function(inBubble) {
 			var bubbleCollision = bubblesGrid.checkCollision(inBubble);
 			if (

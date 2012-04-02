@@ -57,6 +57,13 @@ var Bullble_Controller = (function(inX, inY, inType) {
 			return image;
 		},
 
+		froze: function() {
+			var frozeImage = new AnimatedImage_Tool('bubble_frozzen');
+			frozeImage.init();
+			frozeImage.setPos(image.getX() - 1, image.getY() - 1);
+			frozeImage.show();
+		},
+
 		stop: function() {
 			image.stop();
 		},

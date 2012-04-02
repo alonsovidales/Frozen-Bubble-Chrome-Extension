@@ -7,6 +7,8 @@ var Player_Controller = (function(inCompressor) {
 	var shooterRotatedDeg = 0;
 	var chamberBubble = null;
 	var shooterBall = null;
+	var hurryTimeout = null;
+	var alertTimeout = null;
 	var stopped = false;
 
 	var moveToLeft = function() {
@@ -52,6 +54,8 @@ var Player_Controller = (function(inCompressor) {
 			to: 49});
 
 		currentStatus = null;
+
+		resetHurry();
 	};
 
 	var moveToRight = function() {
@@ -106,6 +110,27 @@ var Player_Controller = (function(inCompressor) {
 			});
 	};
 
+	var resetHurry = function() {
+		if (hurryTimeout !== null) {
+			clearTimeout(hurryTimeout);
+		}
+		if (alertTimeout !== null) {
+			clearTimeout(alertTimeout);
+			UserAlerts_Tool.removeAlert();
+			SoundManager_Tool.stop(config.player.hurrySnd);
+		}
+		hurryTimeout = setTimeout(function() {
+			SoundManager_Tool.play(config.player.hurrySnd, true);
+
+			UserAlerts_Tool.showAlert('hurry', true);
+			alertTimeout = setTimeout(function() {
+				SoundManager_Tool.stop(config.player.hurrySnd);
+				shoot();
+				UserAlerts_Tool.removeAlert();
+			}, config.player.timeToShowHurry);
+		}, config.player.timeToShoot);
+	};
+
 	return {
 		win: function() {
 			if (!stopped) {
@@ -155,6 +180,8 @@ var Player_Controller = (function(inCompressor) {
 
 			chargeChamberBall();
 			rotateObserver();
+
+			resetHurry();
 
 			document.addEventListener('keydown', function(inEvent) {
 				if (!stopped) {

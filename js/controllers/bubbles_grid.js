@@ -68,8 +68,6 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 
 		// Remove the bubbles into the grid bubbles
 		for (bubble in inParentGroup) {
-			console.log('downGroup ' + bubble);
-			console.log(inParentGroup[bubble]);
 			bubblesToRemove[bubble] = inParentGroup[bubble].bubble;
 
 			delete bubbles[bubble];
@@ -140,7 +138,6 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			bubblesTmp[bubble] = bubbles[bubble];
 		}
 
-		console.log(inCheckGroup);
 		if (inCheckGroup) {
 			bubblesInGroup = checkIfExistGroup(inBubbleInfo);
 
@@ -218,6 +215,12 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 					inGameOverFunc();
 					break;
 				}
+			}
+		},
+
+		frozeAllTheBubbles: function() {
+			for (bubble in bubbles) {
+				bubbles[bubble].bubble.froze();
 			}
 		},
 

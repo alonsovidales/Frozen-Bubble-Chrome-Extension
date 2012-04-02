@@ -16,10 +16,11 @@ var SoundManager_Tool = (function() {
 		  * @param inOggFile <string> : Path to wav file
 		  * @param inCallback <funciton> : A function to be called after the game ends
 		  */
-		play: function (inOggFile, inCallback) {
+		play: function (inOggFile, inRepeat, inCallback) {
 			if (sounds[inOggFile] === undefined) {
 				sounds[inOggFile] = new Audio(inOggFile);
 			}
+			sounds[inOggFile].loop = inRepeat;
 			sounds[inOggFile].play();
 
 			// If is defined any call back function, call it after the sound ends
