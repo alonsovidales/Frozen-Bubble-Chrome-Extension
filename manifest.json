@@ -1,7 +1,7 @@
 {
 	"name": "Frozen Bubble",
-	"description": "A JavaScript version of the classic game",
-	"version": "0.0.0.1",
+	"description": "Frozen Bubble is a free software Puzzle Bobble style computer game. This is a little version of the game based on JavaScript and HTML 5.",
+	"version": "1.0.0.0",
 	"icons": {
 		"16": "img/icons/frozen_16_16.png",
 		"32": "img/icons/frozen_32_32.png",
