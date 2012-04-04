@@ -50,7 +50,9 @@ var config = {
 		top: 364,
 		left: 275,
 		width: 100,
-		height: 100
+		height: 100,
+		maxRotationDegLeft: -70,
+		maxRotationDegRight: 70,
 	},
 
 	// The configuration for Player_Controller
@@ -68,9 +70,34 @@ var config = {
 			width: 80,
 			height: 60,
 			images: 70,
+			// The position of the image where starts the shoot animation
+			shootAnimationFrom: 20,
+			// The position of the image where ends the shoot animation
+			shootAnimationTo: 49,
+			// The position of the image where starts the animation to move to the right the shooter,
+			rightAnimationFrom: 50,
+			// The position of the image where starts the animation to move to the right the shooter,
+			rightAnimationTo: 71,
+			// The position of the image where starts the animation to move to the left the shooter
+			leftAnimationFrom: 19,
+			// The position of the image where ends the animation to move to the left the shooter
+			leftAnimationTo: 0,
 			// The time between frames in miliseconds
 			loopTime: 10
 		},
+		// Winner image animation attributes
+		// @see img/penguins/win.png
+		winnerImageAttr : {
+			animationFrom: 1,
+			animationTo: 68
+		},
+		// Lost image animation attributes
+		// @see img/penguins/looser.png
+		loserImageAttr : {
+			animationFrom: 1,
+			animationTo: 157
+		},
+
 		// The position of the player
 		top: 428,
 		left: 412,
