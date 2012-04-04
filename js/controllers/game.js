@@ -107,10 +107,10 @@ var Game_Controller = (function() {
 			}
 
 			var levelText = new Text_Tool('level: ' + levelText);
-			levelText.init(15, 100);
+			levelText.init(config.scoreBoard.x, config.scoreBoard.y);
 
 			scoreText = new Text_Tool();
-			scoreText.init(15, 120);
+			scoreText.init(config.scoreBoard.x, config.scoreBoard.y + 20);
 
 			setScore(getScore());
 

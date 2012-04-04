@@ -191,16 +191,16 @@ var Player_Controller = (function(inCompressor) {
 			document.addEventListener('keydown', function(inEvent) {
 				if (!stopped) {
 					switch (inEvent.keyCode) {
-						case 38:
-						case 32:
+						case config.player.constrols.trigger:
+						case config.player.constrols.secondTrigger:
 							shoot();
 							break;
 	
-						case 37:
+						case config.player.constrols.left:
 							moveToLeft();
 							break;
 	
-						case 39:
+						case config.player.constrols.right:
 							moveToRight();
 							break;
 					}
