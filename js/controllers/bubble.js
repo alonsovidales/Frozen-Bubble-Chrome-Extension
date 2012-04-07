@@ -1,3 +1,12 @@
+/**
+  * Author: Alonso Vidales <alonso.vidales@tras2.es>
+  * Date: 2012-03-26
+  *
+  * This class is used to control all the bubble features, the image, move it, check collisions, etc
+  *
+  * @see config.game
+  *
+  */
 var Bullble_Controller = (function(inX, inY, inType) {
 	var image = null;
 	var type = inType;

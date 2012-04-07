@@ -76,7 +76,7 @@ var Game_Controller = (function() {
 	};
 
 	/**
-	  * This method shows the game credits into a wood box
+	  * This method shows the game credits over a wood background
 	  *
 	  */
 	var showCredits = function() {
@@ -98,10 +98,27 @@ var Game_Controller = (function() {
 
 	// Public scope
 	var my = {
+		/**
+		  * This method adds a score to the current score, and shows it
+		  * into the scoreboard
+		  *
+		  * @param inPoints <int>: The number of points to add
+		  *
+		  */
 		addToScore: function(inPoints) {
 			setScore(currentScore + inPoints);
 		},
 
+		/**
+		  * This method should be called after the game ends and if the user wins
+		  * and alert with the winner text is shown, ths score is updated, and a new level
+		  * is created after tree seconds, if the user is at the last level, the alerts gives
+		  * the option of restart all the game
+		  *
+		  * @see Compressor_Controller: stop method
+		  * @see Player_Controller: win method
+		  *
+		  */
 		win: function() {
 			compressor.stop();
 			player.win();
@@ -109,36 +126,66 @@ var Game_Controller = (function() {
 			setScore(currentScore + config.scoreBoard.pointsByLevel);
 			saveScore();
 
+			// Check if the user is at the last level
 			if (currentLevel == config.game.totalLevels) {
 				UserAlerts_Tool.showAlert('winner_last_level', false, 'restart game', my.resetAll);
 			} else {
+				// Show the alert, wait tree seconds, and launch the next level
 				UserAlerts_Tool.showAlert('winner', false);
 
+				// Wait for tree seconds, and launch the next level
 				setTimeout(function() {
 					my.init(currentLevel + 1);
 				}, 3000);
 			}
 		},
 
+		/**
+		  * This method should be called after the game ends and if is a losing game
+		  * This method shows the loser alert message, stops the compessor, and the player events, and 
+		  * relaunch the current level after wait tree seconds.
+		  *
+		  * @see Compressor_Controller: gameOver method
+		  * @see Player_Controller: gameOver method
+		  */
 		gameOver: function() {
 			UserAlerts_Tool.showAlert('loser', false);
 			compressor.gameOver();
 			player.gameOver();
 
+			// Wait for tree seconds, and relaunch the level
 			setTimeout(function() {
 				my.init(currentLevel);
 			}, 3000);
 		},
 
+		/**
+		  * This method removes all the information from localStorage, and
+		  * relaunchs the game, the user will feel that all the game is reset,
+		  * the current level, current score, etc
+		  *
+		  */
 		resetAll: function() {
 			localStorage.clear();
 			my.init();
 		},
 
+		/**
+		  * This method creates a new level, and executes all the necessary code to
+		  * creates all the elemnts for the level
+		  *
+		  * @param inLevel (optional) <int>: The Number of the level to init if you
+		  *	don't specify it the level will be the last played, and if the user
+		  *	didn't play before, the level will be the first one
+		  *
+		  */
 		init: function (inLevel) {
+			// Remove all the element into the main canvas
 			mainCanvas = document.getElementById('main_canvas');
 			mainCanvas.innerHTML = '';
+			mainCanvas.classList.add('game_background');
 
+			// If is not level specify, get the last one played, or the fisrt one
 			if (inLevel === undefined) {
 				currentLevel = getLevel();
 			} else {
@@ -146,24 +193,24 @@ var Game_Controller = (function() {
 				saveLevel();
 			}
 
+			// Set the new text, and pad with a 0 if is a single number level
 			var levelText = currentLevel;
 			if (currentLevel < 10) {
 				levelText = '0' + currentLevel;
 			}
-
 			var levelText = new Text_Tool('level: ' + levelText);
 			levelText.init(config.scoreBoard.x, config.scoreBoard.y);
 
+			// Show the score into the scoreboard and save it
 			scoreText = new Text_Tool();
 			scoreText.init(config.scoreBoard.x, config.scoreBoard.y + 20);
-
 			setScore(getScore());
 
-			mainCanvas.classList.add('game_background');
-
+			// Launch the compressor
 			compressor = new Compressor_Controller(this.win, this.gameOver, this);
 			compressor.init(currentLevel);
 
+			// Launch the player, images, events, etc.
 			player = new Player_Controller(compressor);
 			player.init();
 

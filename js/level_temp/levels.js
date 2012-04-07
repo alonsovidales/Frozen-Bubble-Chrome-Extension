@@ -179,16 +179,10 @@ var levels = {
 		col: 1
 	}, {
 		row: 0,
-		col: 2
-	}, {
-		row: 0,
 		col: 3
 	}, {
 		row: 0,
 		col: 4
-	}, {
-		row: 0,
-		col: 5
 	}, {
 		row: 0,
 		col: 6

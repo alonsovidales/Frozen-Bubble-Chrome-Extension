@@ -226,8 +226,8 @@ var Player_Controller = (function(inCompressor) {
 				// Show the penguin "winner" animation in a loop
 				penguin.setClass('winner');
 				penguin.animate({
-					from: config.winnerImageAttr.animationFrom,
-					to: config.winnerImageAttr.animationTo,
+					from: config.player.winnerImageAttr.animationFrom,
+					to: config.player.winnerImageAttr.animationTo,
 					type: 'loop'
 				});
 			}
@@ -250,8 +250,8 @@ var Player_Controller = (function(inCompressor) {
 				// Show the penguin "winner" animation in a loop
 				penguin.setClass('looser');
 				penguin.animate({
-					from: config.loserImageAttr.animationFrom,
-					to: config.loserImageAttr.animationTo
+					from: config.player.loserImageAttr.animationFrom,
+					to: config.player.loserImageAttr.animationTo
 				});
 			}
 		},
