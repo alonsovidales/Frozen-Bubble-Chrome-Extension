@@ -5,7 +5,12 @@
   * This class is used to control all the bubble features,
   * the image, move it, check collisions, etc
   *
-  * @see config.game
+  * @see config.bubbles
+  * @see AnimatedImage_Tool
+  *
+  * @param inX <int>: The pixels of the X axis where the bubble will be created
+  * @param inY <int>: The pixels of the T axis where the bubble will be created
+  * @param inType <int>: The type of the  bubble to create
   *
   */
 var Bullble_Controller = (function(inX, inY, inType) {
