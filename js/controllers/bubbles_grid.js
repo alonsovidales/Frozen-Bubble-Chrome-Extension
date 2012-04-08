@@ -1,16 +1,47 @@
+/**
+  * Author: Alonso Vidales <alonso.vidales@tras2.es>
+  * Date: 2012-03-27
+  *
+  * This class is used to handle all the features of the bubbles grid
+  * at the bottom of the compressor
+  *
+  * @see config.bubblesGrid
+  * @see Bullble_Controller
+  *
+  * @param inWinFunc <function>: The function to be called if is detected that
+  *	the user wins the game
+  * @param inGameOverFunc <function>: The function to be called if is detected that
+  *	the user lose the game
+  * @param inGameController <object>: Game_Controller object
+  *
+  */
 var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameController) {
+	// This object will be used as a dictionary and will contain all the bubble in the grid
+	// The key for each bubble will have the next structure: [bubble.row + '-' + bubble.col]
 	var bubbles = {};
 	var bubblesTmp = null;
+	// The number of bubble in a group when a crash is detected
 	var bubblesInGroup = 0;
+	// The bubbles to be removed after a group is created by a crash
 	var bubblesToRemove = null;
+	// The number of pixels for the Y axe that the bubbles will have as top
 	var baseY = 0;
 
+	/**
+	  * This method will create the animation to remove, and remove all the bubbles inside the 
+	  * bubblesToRemove object
+	  */
 	var removeBalls = function() {
+		// 999999 === Infinity
 		var minX = 999999;
 		var maxX = 0;
 
+		// Add to the score the number of bubbles to temove by the number of points that the
+		// user obtains for each bubble
 		inGameController.addToScore(Object.keys(bubblesToRemove).length * config.scoreBoard.pointsByBubble);
 
+		// Calculate the max and min pixels of the X axe in order to create the animation to
+		// show before remove the bubbles
 		for (bubble in bubblesToRemove) {
 			var image = bubblesToRemove[bubble].getImage();
 
@@ -31,6 +62,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			var targetX = 0;
 			var targetY = image.getY() - config.bubblesGrid.moveDestroyAnimation;
 
+			// If the bubble is at the left of the middle of the group move it to the left, and viceversa
 			if (image.getX() < ((maxX + minX) / 2)) {
 				targetX = image.getX() - config.bubblesGrid.moveDestroyAnimation;
 			} else {
@@ -40,12 +72,30 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			bubblesToRemove[bubble].destroy(targetX, targetY);
 		}
 
+		// If there is no bubbles, the user wins
 		if (Object.keys(bubbles).length == 0) {
 			inWinFunc();
 		}
 	};
 
+	/**
+	  * This method check if a bubble is supported by any other bubble, or is not in order to know
+	  * if a bubbe is removable, or not
+	  * This is a recursive method, check is a bubble is supported if at least on of the collider
+	  * bubbles are supported
+	  *
+	  * @param inBubbleInfo <object>: an object with the next structure:
+	  *	{
+	  *		row: <int>, // The row where the bubble is allocated
+	  *		col: <int>, // The column where the bubble is allocated
+	  *		bubble: <object> // Bullble_Controller object that represents the bubble }
+	  * @param inRightCheck <bool>: If true check if the bubble is supported by the right, if false by the left
+	  *
+	  * @return <bool>: Returns true if the bubble is supported, false if not
+	  *
+	  */
 	var isBubbleSupported = function(inBubbleInfo, inRightCheck) {
+		// Get the possible bubbles that supports this one
 		var bubbleAtLateral = bubbles[(inBubbleInfo.row) + '-' + (inBubbleInfo.col - 1)];
 		if (inRightCheck) {
 			bubbleAtLateral = bubbles[(inBubbleInfo.row) + '-' + (inBubbleInfo.col + 1)];
@@ -53,14 +103,12 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		var bubbleTopLeft = bubbles[(inBubbleInfo.row - 1) + '-' + (inBubbleInfo.col - 0.5)];
 		var bubbleTopRight = bubbles[(inBubbleInfo.row - 1) + '-' + (inBubbleInfo.col + 0.5)];
 
-		if (
+		// Check if one of the bubbles sopports the current one, and in any bubble exists return true, false if not
+		return (
 			(inBubbleInfo.row === 0) ||
 			(bubbleTopLeft !== undefined) ||
 			(bubbleTopRight !== undefined) ||
-			((bubbleAtLateral !== undefined) && isBubbleSupported(bubbleAtLateral, inRightCheck)))
-			return true;
-		else
-			return false;
+			((bubbleAtLateral !== undefined) && isBubbleSupported(bubbleAtLateral, inRightCheck)));
 	};
 
 	var downGroup = function(inParentGroup) {
