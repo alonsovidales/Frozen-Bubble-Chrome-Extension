@@ -14,6 +14,7 @@ var SoundManager_Tool = (function() {
 		  * Plays a wav file
 		  *
 		  * @param inOggFile <string> : Path to wav file
+		  * @param inRepeat <bool> : True specify that the sound should be played in a loop
 		  * @param inCallback <funciton> : A function to be called after the game ends
 		  */
 		play: function (inOggFile, inRepeat, inCallback) {
