@@ -21,7 +21,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 	var bubbles = {};
 	var bubblesTmp = null;
 	// The number of bubble in a group when a crash is detected
-	var bubblesInGroup = 0;
+	var bubblesInGroup = null;
 	// The bubbles to be removed after a group is created by a crash
 	var bubblesToRemove = null;
 	// The number of pixels for the Y axe that the bubbles will have as top
@@ -111,6 +111,22 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			((bubbleAtLateral !== undefined) && isBubbleSupported(bubbleAtLateral, inRightCheck)));
 	};
 
+	/**
+	  * This method check if a bubble is supported by any other bubble, or is not in order to know
+	  * if a bubbe is removable, or not
+	  * This is a recursive method, check is a bubble is supported if at least on of the collider
+	  * bubbles are supported
+	  *
+	  * @param inBubbleInfo <object>: an object with the next structure:
+	  *	{
+	  *		row: <int>, // The row where the bubble is allocated
+	  *		col: <int>, // The column where the bubble is allocated
+	  *		bubble: <object> // Bullble_Controller object that represents the bubble }
+	  * @param inRightCheck <bool>: If true check if the bubble is supported by the right, if false by the left
+	  *
+	  * @return <bool>: Returns true if the bubble is supported, false if not
+	  *
+	  */
 	var downGroup = function(inParentGroup) {
 		var bubblesToAdd = {};
 
@@ -136,10 +152,29 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		}
 	};
 
+	/**
+	  * This method Checks if after a bubble crash, this crash has created a new group (adjacent bubbles
+	  * with the same type), and returns an object with all the bubbles
+	  * Important: The internal var bubblesTmp should contain an exact copy of the bubbles internal var
+	  * before call this method, this methos works directly modifying the bubblesTmp var
+	  *
+	  * @param inBubbleInfo <object>: The new bubble added than can create the group, there is an object
+	  *	with the next structure:
+	  *		{
+	  *			row: <int>, // The row where the bubble is allocated
+	  *			col: <int>, // The column where the bubble is allocated
+	  *			bubble: <object> // Bullble_Controller object that represents the bubble }
+	  *
+	  * @return <object>: An object of objects with the same structure as inBubbleInfo and with
+	  *	[row + '-' + col] as key
+	  *
+	  */
 	var checkIfExistGroup = function(inBubbleInfo) {
 		var currentType = inBubbleInfo.bubble.getType();
 		var retBubbles = {};
 		for (bubble in bubblesTmp) {
+			// Check if exist one of the adjacent bubbles have the same type, and in this
+			// case add it to the group and remove from bubblesTmp
 			if (
 				(bubblesTmp[bubble] !== null) &&
 				(bubblesTmp[bubble].bubble.getType() == currentType) && 
@@ -160,13 +195,43 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		return retBubbles;
 	};
 
+	/**
+	  * This method checks if the given ball is out of the limits (under the bottom limit)
+	  *
+	  * @param inBubbleInfo <object>: The bubble to check is is out of limits. Is an object with the next structure:
+	  *		{
+	  *			row: <int>, // The row where the bubble is allocated
+	  *			col: <int>, // The column where the bubble is allocated
+	  *			bubble: <object> // Bullble_Controller object that represents the bubble }
+	  *
+	  * @return <bool>: True if is out, or false if not
+	  *
+	  */
 	var checkBallOutOfLimits = function(inBubbleInfo) {
 		return ((inBubbleInfo.bubble.getImage().getY() + config.bubbles.height) > config.ballsField.bottLeft.y);
 	};
 
+	/**
+	  * This method moves a bubble to the nearby grid cell, and launch all the checks to know if one of the bubbles are
+	  * out of limits (game over) or all the bubbles are removed (player wins)
+	  *
+	  * @param inBubbleInfo <object>: The bubble info to move
+	  *		{
+	  *			row: <int>, // The row where the bubble is allocated
+	  *			col: <int>, // The column where the bubble is allocated
+	  *			bubble: <object> // Bullble_Controller object that represents the bubble }
+	  * @param inSlice <bool>: True if the bubble should be moves slicing, or is a direct movement
+	  * @param inCheckGroup <bool>: True if should be checked if exist any group (user added bubble) or false
+	  *	if shouldn't be checked (added by the system at the begging of the level)
+	  *
+	  */
 	var moveToCell = function(inBubbleInfo, inSlice, inCheckGroup) {
-		//inBubbleInfo.bubble.getImage().setText(inBubbleInfo.col + ' - ' + inBubbleInfo.row);
+		// Add the col and row texts over the bubble image
+		if (config.debug) {
+			inBubbleInfo.bubble.getImage().setText(inBubbleInfo.col + ' - ' + inBubbleInfo.row);
+		}
 
+		// Calculate the cell pos, and move the bubble to the corresponding cell
 		if (inSlice) {
 			inBubbleInfo.bubble.getImage().moveTo(
 				(inBubbleInfo.col * config.bubbles.width) + config.bubblesGrid.x,
@@ -180,13 +245,14 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 				(inBubbleInfo.row * (config.bubbles.height - config.bubblesGrid.heightCorrection)) + baseY);
 		}
 
-		// Clone the array
+		// Clone the bubbles array to bubblesTmp
 		bubblesTmp = {};
 		for (bubble in bubbles) {
 			bubblesTmp[bubble] = bubbles[bubble];
 		}
 
 		if (inCheckGroup) {
+			// Get le list of bubbles inside the group of the nuw added bubble
 			bubblesInGroup = checkIfExistGroup(inBubbleInfo);
 
 			if (Object.keys(bubblesInGroup).length >= config.bubblesGrid.minBubblesToBeConsideredAsGroup) {
@@ -203,7 +269,17 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		}
 	};
 
+	// Public scope
 	var my = {
+		/**
+		  * This method check if a given bubble crash againsth the bubbles grid
+		  * and returns true in that case
+		  *
+		  * @param inBubble <object>: The Bullble_Controller object to be checked
+		  *
+		  * @return <bool>: True if exists a collision, false if not
+		  *
+		  */
 		checkCollision: function(inBubble) {
 			for (bubble in bubbles) {
 				if (bubbles[bubble].bubble.getImage().checkCollision(inBubble.getImage(), 'circle')) {
@@ -214,26 +290,40 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			return false;
 		},
 
+		/**
+		  * This method add a bubble to the corresponding cell after a collision
+		  * with another bubble is detected
+		  *
+		  * @param inBubble <object>: The Bullble_Controller object to be checked
+		  * @param inParentBubble <object>: The bubble who the bubble to add has creashed
+		  *
+		  */
 		addBubble: function(inBubble, inParentBubble) {
 			var col = row = 0;
 			var xDesp = 1;
 
+			// Check if the bubble crash against another bubble, or against the compressor
 			if (inParentBubble !== false) {
 				var desp = 1;
 				if (Math.abs(inParentBubble.bubble.getImage().getY() - inBubble.getImage().getY()) < (config.bubbles.height / 3)) {
+					// The collision is at a lateral of the parent bubble
 					row = inParentBubble.row;
 				} else {
 					desp = 0.5;
 					if (inParentBubble.bubble.getImage().getY() < inBubble.getImage().getY()) {
+						// The collision is at the bottom of the parent bubble
 						row = inParentBubble.row + 1;
 					} else {
+						// The collision is at the top of the parent bubble
 						row = inParentBubble.row - 1;
 					}
 				}
 
 				if (inParentBubble.bubble.getImage().getX() > inBubble.getImage().getX()) {
+					// The collision is at the left of the parent bubble
 					col = inParentBubble.col - desp;
 				} else {
+					// The collision is at the left of the right bubble
 					col = inParentBubble.col + desp;
 				}
 			} else {
@@ -249,6 +339,12 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			moveToCell(bubble, false, true);
 		},
 
+		/**
+		  * This method moves all the bubbles grid to a determinate position in pixels into the Y axe
+		  *
+		  * @param inY <int>: The number of pixels from the top os the window to set the top os the grid
+		  *
+		  */
 		setBaseY: function(inY) {
 			baseY = inY;
 
@@ -257,6 +353,11 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			}
 		},
 
+		/**
+		  * This method check if one of the bubbles if out of the bottom limit, and in that case launchs the
+		  * "inGameOverFunc" function in order to end the game
+		  *
+		  */
 		checkIfOutOfLimits: function() {
 			for (bubble in bubbles) {
 				if (checkBallOutOfLimits(bubbles[bubble])) {
@@ -266,12 +367,23 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			}
 		},
 
+		/**
+		  * This method goes bubble by bubble adding the "frozen" mask to create the effect
+		  *
+		  */
 		frozeAllTheBubbles: function() {
 			for (bubble in bubbles) {
 				bubbles[bubble].bubble.froze();
 			}
 		},
 
+		/**
+		  * This method should be called after all the DOM elements are rendered, and creates the initial
+		  * bubbles grid from the corresponding level object.
+		  *
+		  * @see js/level_temp/levels.js
+		  *
+		  */
 		init: function(initBubbles) {
 			for (bubble in initBubbles) {
 				initBubbles[bubble].bubble.init();

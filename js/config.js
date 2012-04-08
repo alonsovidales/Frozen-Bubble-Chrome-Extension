@@ -5,6 +5,9 @@
   * Global config object
   */
 var config = {
+	// Debug var, set false for a production env
+	debug: false,
+
 	// Lik to the author CV
 	cvLink: 'http://es.linkedin.com/pub/alonso-vidales/6/a9b/225',
 
