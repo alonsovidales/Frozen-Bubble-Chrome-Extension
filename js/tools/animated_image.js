@@ -1,18 +1,56 @@
+/**
+  * Author: Alonso Vidales <alonso.vidales@tras2.es>
+  * Date: 2012-03-26
+  *
+  * This class is used to create game elements with animations, move the
+  * elements across the screen, etc.
+  * The element will be a "div" HTML tag, with the given class. All the styles
+  * should be in the corresponding CSS files
+  *
+  * @param inClass <str>: The class name to add to the div
+  * @param inStartPosition <optional int>: The number of the image to show of the spreadsheet on 
+  * 	the first representation the number goes from 1 to n
+  * @param inTimeInterval <optional int>: The time in ms that should be wait between the images of the animation
+  * @param inTimeInterval <optional int>: The total number of images contained into the spreadsheet
+  *
+  */
 var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inNumberOfImages) {
+	// Will contain the DOM div element that represents the image
 	var divElm = null;
+	// Will be an object with the information about the movement if the image is exists any movement
 	var moveInfo = null;
+	// The timeout that interchanges the images
 	var animationLoop = null;
+	// The position into the spreadsheet of the current image
 	var currentPos = inStartPosition;
+	// true if the animation goes from an image to the right images, or false to the left
 	var rigthWay = true;
+	// The interval in ms to show the diferent pictures into the spreadsheet
 	var timeInterval = inTimeInterval;
+	// A temp var to store which was the fir image played into an animation
 	var animationFrom = 0;
+	// The current position into the X axe of the top left corner of the div element
 	var curentX = 0;
+	// The current position into the Y axe of the top left corner of the div element
 	var curentY = 0;
+	// The las image to play into the current animation
 	var animationTo = inNumberOfImages;
+	// Will contain the current animation type, could be:
+	//	'circle': after show the last image change the way of the animation,
+	//	'loop': after play the last image, play the first one,
+	//	'': only play the images into the sequence, and ends with the last image
 	var animationType = '';
+	// True if a move animation is in course
 	var movingTo = false;
+	// The function to call after a movement ends
 	var endAnimationCallBack = null;
 
+	/**
+	  * This method shows an given image of the spreadsheet
+	  *
+	  * @param inPosition <int>: The position of the image to show from the left of the spreadsheet
+	  *
+	  */
 	var setAnimationImage = function(inPosition) {
 		var position = inPosition * divElm.offsetWidth;
 
