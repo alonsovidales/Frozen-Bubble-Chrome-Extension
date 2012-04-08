@@ -170,6 +170,27 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 		}
 	};
 
+	/**
+	  * This method returns a boolean true in case that a given point obkect is in a
+	  * square defined by the top left corner, and le bottom right corners points
+	  *
+	  * @param inPoint <object>: The point to check with the next structure:
+	  *	{
+	  *		x: <int>, // The pixels of the X axe of the point
+	  *		y: <int>} // The pixels of the Y axe of the point
+	  * @param inSquare <object>: The points of the top left and bottom right that
+	  *	defines the square:
+	  *	{
+	  *		topLeft: { // The top left point
+	  *			x: <int>, // The pixels of the X axe of the point
+	  *			y: <int>}, // The pixels of the Y axe of the point
+	  *		bottRight: { // The botton right point
+	  *			x: <int>, // The pixels of the X axe of the point
+	  *			y: <int>}} // The pixels of the Y axe of the point
+	  *
+	  * @return <bool>: True if the point is inside the square, or false if not
+	  *
+	  */
 	var checkPointInSquare = function(inPoint, inSquare) {
 		return (
 			(inPoint.x >= inSquare.topLeft.x) &&
@@ -178,6 +199,20 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 			(inPoint.y <= inSquare.bottRight.y));
 	};
 
+	/**
+	  * This method uses the Pitagoras theorem in order to calculate the length of
+	  * hipotenusa that defines the two points, then calculates the distance between
+	  * the two points
+	  *
+	  * @param inPointOne <object>: One of the points
+	  *	{
+	  *		x: <int>, // The pixels of the X axe of the point
+	  *		y: <int>} // The pixels of the Y axe of the point
+	  * @param inPointTwo <object>: The other point
+	  *	{
+	  *		x: <int>, // The pixels of the X axe of the point
+	  *		y: <int>} // The pixels of the Y axe of the point
+	  */
 	var getDistanceTwoPoints = function(inPointOne, inPointTwo) {
 		var distX = Math.abs(inPointOne.x - inPointTwo.x);
 		var distY = Math.abs(inPointOne.y - inPointTwo.y);
@@ -185,39 +220,92 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 		return Math.sqrt((distX * distX) + (distY * distY));
 	};
 
+	// Public scope
 	var my = {
+		/**
+		  * This method adds the class 'hd' in order to hide the element
+		  * Is necessary have defined the CSS class "hd" as a class with "display: none" style
+		  *
+		  */
 		hide: function() {
 			divElm.classList.add('hd');
 		},
 
+		/**
+		  * This class resets the animation in order to display the original image, and removes
+		  * the "hd" class if isset
+		  *
+		  */
 		show: function() {
 			setAnimationImage(inStartPosition);
 			divElm.classList.remove('hd');
 		},
 
+		/**
+		  * Returns the current position in pixels on the X axe, the point considereer is the
+		  * top left point of the div
+		  *
+		  * @return <int>: The number of pixels from the origin os the X axe
+		  *
+		  */
 		getX: function() {
 			return curentX;
 		},
 
+		/**
+		  * Returns the current position in pixels on the Y axe, the point considereer is the
+		  * top left point of the div
+		  *
+		  * @return <int>: The number of pixels from the origin os the Y axe
+		  *
+		  */
 		getY: function() {
 			return curentY;
 		},
 
+		/**
+		  * Returns the width in pixels of the element
+		  *
+		  * @return <int>: The width in pixels of the element
+		  *
+		  */
 		getWidth: function() {
 			return divElm.offsetWidth;
 		},
 
+		/**
+		  * Returns the height in pixels of the element
+		  *
+		  * @return <int>: The height in pixels of the element
+		  *
+		  */
 		getHeight: function() {
 			return divElm.offsetHeight;
 		},
 
+		/**
+		  * This method checks if another AnimatedImage_Tool object crash (the area of the other
+		  * object is inside the area of this object) against this object.
+		  * You can use this method to check square or circular elements.
+		  *
+		  * @param inElemToCheck <object>: The AnimatedImage_Tool instance to check
+		  * @param inType optional <str>: If is defined could be "circle", and will be considered
+		  *	both elemnts as circular elements, by default will be both square elements
+		  *
+		  * @return <bool>: True if isset a crash, false if not
+		  *
+		  */
 		checkCollision: function(inElemToCheck, inType) {
 			if ((inType !== undefined) && (inType == 'circle')) {
+				// Isset a crash in case of the distance between the center of both
+				// elements is less than the sum of the radious
 				var radThis = my.getWidth() / 2;
 				var radCheck = inElemToCheck.getWidth() / 2;
+
 				var centerThis = {
 					x: my.getX() - radThis,
 					y: my.getY() - radThis};
+
 				var centerCheck = {
 					x: inElemToCheck.getX() - radCheck,
 					y: inElemToCheck.getY() - radCheck};
@@ -226,6 +314,8 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 
 				return false;
 			} else {
+				// Isset a crash if one of the corners of the element to check is inside the
+				// area of the other element
 				var square = {
 					topLeft: {
 						x: my.getX(),
