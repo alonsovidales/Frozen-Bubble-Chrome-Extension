@@ -46,7 +46,7 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 	var endAnimationCallBack = null;
 
 	/**
-	  * This method shows an given image of the spreadsheet
+	  * This method shows the corresponding image of the spreadsheet
 	  *
 	  * @param inPosition <int>: The position of the image to show from the left of the spreadsheet
 	  *
@@ -57,15 +57,23 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 		divElm.style.setProperty('background-position', '-' + position + 'px 0px', '!important');
 	};
 
+	/**
+	  * Creates an animation loop using the config parameters configured on the
+	  * "animate" method of the public scope, this method should be called from the "animate"
+	  * method only
+	  *
+	  */
 	var animateFrame = function() {
 		var stop = false;
 
+		// Move the pointer to the image to show according to the current animation way
 		if (rigthWay) {
 			currentPos++;
 		} else {
 			currentPos--;
 		}
 
+		// Is the animation finished?
 		if (currentPos == animationTo) {
 			switch(animationType) {
 				case 'circle':
@@ -82,10 +90,6 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 			}
 		}
 
-		if (currentPos == animationFrom) {
-			rigthWay = true;
-		}
-
 		setAnimationImage(currentPos);
 
 		if (!stop) {
@@ -97,15 +101,34 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 		}
 	};
 
+	/**
+	  * Returns the tangegent os the angle that forms the tringle rectangle which
+	  * hipotenusa is defined by the two given points
+	  *
+	  * @param inX <int>: The width in pixels of the X axe from the origin for the main point
+	  * @param inY <int>: The width in pixels of the Y axe from the origin for the main point
+	  * @param inTargX <int>: The width in pixels of the X axe from the origin for the second point
+	  * @param inTargY <int>: The width in pixels of the Y axe from the origin for the second point
+	  *
+	  * @return <int>: The tangent
+	  *
+	  */
 	var getTangent = function(inX, inY, inTargX, inTargY) {
 		return Math.abs(inTargX - inX) / Math.abs(inTargY - inY);
 	};
 
+	/**
+	  * This method is called to create the animation of the element movement
+	  *
+	  */
 	var moveLoop = function() {
+		// Calculate the triangle rectangle cathetus
 		var distanceX = Math.abs(curentX - moveInfo.targetX);
 		var distanceY = Math.abs(curentY - moveInfo.targetY);
+		// The angle in radians
 		var ang = Math.atan(distanceX / distanceY);
 
+		// Will allocate the X and Y points where the element will be moved
 		var nextX = 0;
 		var nextY = 0;
 
@@ -123,6 +146,8 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 
 		my.setPos(nextX, nextY);
 
+		// Check if the distance to the objective is less than a steep, in that case, move the element and
+		// ends the movement calling to the callback function if is defined
 		if (
 			((Math.abs(moveInfo.targetX - curentX) - moveInfo.steep) <= moveInfo.steep) &&
 			((Math.abs(moveInfo.targetY - curentY) - moveInfo.steep) <= moveInfo.steep)) {
@@ -130,13 +155,12 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 
 			if ((moveInfo.endMovCallback !== null) && (moveInfo.endMovCallback !== undefined)){
 				moveInfo.endMovCallback(my);
-
-				//moveInfo.endMovCallback = null;
 			}
 		} else {
 			moveInfo.movingLoop = setTimeout(moveLoop, moveInfo.loopTime);
 		}
 
+		// Check if isset a function that should be called each steep, and call it in this case
 		if ((moveInfo.steepCheckFunc !== undefined) && movingTo) {
 			if (moveInfo.steepCheckFuncObj !== undefined) {
 				moveInfo.steepCheckFunc(moveInfo.steepCheckFuncObj);
