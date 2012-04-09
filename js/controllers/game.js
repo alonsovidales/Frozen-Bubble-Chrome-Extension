@@ -198,8 +198,8 @@ var Game_Controller = (function() {
 			if (currentLevel < 10) {
 				levelText = '0' + currentLevel;
 			}
-			var levelText = new Text_Tool('level: ' + levelText);
-			levelText.init(config.scoreBoard.x, config.scoreBoard.y);
+			var levelTextObj = new Text_Tool('level: ' + levelText);
+			levelTextObj.init(config.scoreBoard.x, config.scoreBoard.y);
 
 			// Show the score into the scoreboard and save it
 			scoreText = new Text_Tool();

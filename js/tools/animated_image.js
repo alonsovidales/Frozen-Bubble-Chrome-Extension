@@ -311,8 +311,6 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 					y: inElemToCheck.getY() - radCheck};
 
 				return ((radThis + radCheck) >= getDistanceTwoPoints(centerThis, centerCheck));
-
-				return false;
 			} else {
 				// Isset a crash if one of the corners of the element to check is inside the
 				// area of the other element
@@ -520,7 +518,7 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 				currentPos = 0;
 			}
 		}
-	}
+	};
 
 	return my;
 });

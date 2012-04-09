@@ -116,12 +116,14 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc, inGameControlle
 			// Read the current level from the levels file and adds all the bubbles to the positions
 			var bubbles = levels[inLevel];
 			for (bubble in bubbles) {
-				bubbles[bubble].bubble = new Bullble_Controller(
-					config.windowConf.width / 2,
-					config.windowConf.width / 2);
+				if (bubbles.hasOwnProperty(bubble)) {
+					bubbles[bubble].bubble = new Bullble_Controller(
+						config.windowConf.width / 2,
+						config.windowConf.width / 2);
+				}
 			}
 
 			bubblesGrid.init(levels[inLevel]);
 		}
-	}
+	};
 });

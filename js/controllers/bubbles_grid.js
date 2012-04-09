@@ -43,13 +43,15 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		// Calculate the max and min pixels of the X axe in order to create the animation to
 		// show before remove the bubbles
 		for (bubble in bubblesToRemove) {
-			var image = bubblesToRemove[bubble].getImage();
+			if (bubblesToRemove.hasOwnProperty(bubble)) {
+				var image = bubblesToRemove[bubble].getImage();
 
-			if (image.getX() < minX) {
-				minX = image.getX();
-			} else {
-				if (image.getX() > maxX) {
-					maxX = image.getX();
+				if (image.getX() < minX) {
+					minX = image.getX();
+				} else {
+					if (image.getX() > maxX) {
+						maxX = image.getX();
+					}
 				}
 			}
 		}
@@ -57,23 +59,25 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		SoundManager_Tool.play(config.bubblesGrid.destroyGroupSnd);
 
 		for (bubble in bubblesToRemove) {
-			var image = bubblesToRemove[bubble].getImage();
-			var bubbleObj = bubblesToRemove[bubble];
-			var targetX = 0;
-			var targetY = image.getY() - config.bubblesGrid.moveDestroyAnimation;
+			if (bubblesToRemove.hasOwnProperty(bubble)) {
+				var imageToRemove = bubblesToRemove[bubble].getImage();
+				var bubbleObj = bubblesToRemove[bubble];
+				var targetX = 0;
+				var targetY = imageToRemove.getY() - config.bubblesGrid.moveDestroyAnimation;
 
-			// If the bubble is at the left of the middle of the group move it to the left, and viceversa
-			if (image.getX() < ((maxX + minX) / 2)) {
-				targetX = image.getX() - config.bubblesGrid.moveDestroyAnimation;
-			} else {
-				targetX = image.getX() + config.bubblesGrid.moveDestroyAnimation;
+				// If the bubble is at the left of the middle of the group move it to the left, and viceversa
+				if (imageToRemove.getX() < ((maxX + minX) / 2)) {
+					targetX = imageToRemove.getX() - config.bubblesGrid.moveDestroyAnimation;
+				} else {
+					targetX = imageToRemove.getX() + config.bubblesGrid.moveDestroyAnimation;
+				}
+
+				bubblesToRemove[bubble].destroy(targetX, targetY);
 			}
-
-			bubblesToRemove[bubble].destroy(targetX, targetY);
 		}
 
 		// If there is no bubbles, the user wins
-		if (Object.keys(bubbles).length == 0) {
+		if (Object.keys(bubbles).length === 0) {
 			inWinFunc();
 		}
 	};
@@ -132,17 +136,21 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 
 		// Remove the bubbles into the grid bubbles
 		for (bubble in inParentGroup) {
-			bubblesToRemove[bubble] = inParentGroup[bubble].bubble;
+			if (inParentGroup.hasOwnProperty(bubble)) {
+				bubblesToRemove[bubble] = inParentGroup[bubble].bubble;
 
-			delete bubbles[bubble];
+				delete bubbles[bubble];
+			}
 		}
 
 		// Check if each bubble is supported by another one at the top or the laterals
 		for (bubble in bubbles) {
-			var bubbleToCheck = bubbles[bubble];
+			if (bubbles.hasOwnProperty(bubble)) {
+				var bubbleToCheck = bubbles[bubble];
 
-			if (!isBubbleSupported(bubbles[bubble], true) && !isBubbleSupported(bubbles[bubble], false)) {
-				bubblesToAdd[bubble] = bubbleToCheck;
+				if (!isBubbleSupported(bubbles[bubble], true) && !isBubbleSupported(bubbles[bubble], false)) {
+					bubblesToAdd[bubble] = bubbleToCheck;
+				}
 			}
 		}
 
@@ -187,7 +195,9 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 				var deepBubbles = checkIfExistGroup(retBubbles[bubble]);
 
 				for (deepBubble in deepBubbles) {
-					retBubbles[deepBubble] = deepBubbles[deepBubble];
+					if (deepBubbles.hasOwnProperty(deepBubble)) {
+						retBubbles[deepBubble] = deepBubbles[deepBubble];
+					}
 				}
 			}
 		}
@@ -248,7 +258,9 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		// Clone the bubbles array to bubblesTmp
 		bubblesTmp = {};
 		for (bubble in bubbles) {
-			bubblesTmp[bubble] = bubbles[bubble];
+			if (bubbles.hasOwnProperty(bubble)) {
+				bubblesTmp[bubble] = bubbles[bubble];
+			}
 		}
 
 		if (inCheckGroup) {
@@ -299,7 +311,8 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		  *
 		  */
 		addBubble: function(inBubble, inParentBubble) {
-			var col = row = 0;
+			var col = 0;
+			var row = 0;
 			var xDesp = 1;
 
 			// Check if the bubble crash against another bubble, or against the compressor
@@ -349,7 +362,9 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 			baseY = inY;
 
 			for (bubble in bubbles) {
-				moveToCell(bubbles[bubble], false, false);
+				if (bubbles.hasOwnProperty(bubble)) {
+					moveToCell(bubbles[bubble], false, false);
+				}
 			}
 		},
 
@@ -360,7 +375,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		  */
 		checkIfOutOfLimits: function() {
 			for (bubble in bubbles) {
-				if (checkBallOutOfLimits(bubbles[bubble])) {
+				if (bubbles.hasOwnProperty(bubble) && (checkBallOutOfLimits(bubbles[bubble]))) {
 					inGameOverFunc();
 					break;
 				}
@@ -373,7 +388,9 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		  */
 		frozeAllTheBubbles: function() {
 			for (bubble in bubbles) {
-				bubbles[bubble].bubble.froze();
+				if (bubbles.hasOwnProperty(bubble)) {
+					bubbles[bubble].bubble.froze();
+				}
 			}
 		},
 
@@ -386,12 +403,16 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		  */
 		init: function(initBubbles) {
 			for (bubble in initBubbles) {
-				initBubbles[bubble].bubble.init();
-				moveToCell(initBubbles[bubble], true, false);
+				if (initBubbles.hasOwnProperty(bubble)) {
+					initBubbles[bubble].bubble.init();
+					moveToCell(initBubbles[bubble], true, false);
+				}
 			}
 
 			for (bubble in initBubbles) {
-				bubbles[initBubbles[bubble].row + '-' + initBubbles[bubble].col] = initBubbles[bubble];
+				if (initBubbles.hasOwnProperty(bubble)) {
+					bubbles[initBubbles[bubble].row + '-' + initBubbles[bubble].col] = initBubbles[bubble];
+				}
 			}
 		}
 	};

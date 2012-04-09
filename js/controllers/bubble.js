@@ -35,24 +35,24 @@ var Bullble_Controller = (function(inX, inY, inType) {
 	  *
 	  */
 	var calcBounce = function(inAngle) {
-		var point = null;
+		var point, b, a, y = null;
 		// Convert the angle to radians
 		var angle = (90 - Math.abs(inAngle)) * Math.PI / 180;
 
 		// Check if the bubble goes to the right in order to calculate the distance
 		// of the X axis
 		if (inAngle > 0) {
-			var b = config.ballsField.topRight.x - image.getX() - config.bubbles.width;
-			var a = b * Math.tan(angle);
-			var y = image.getY() - a;
+			b = config.ballsField.topRight.x - image.getX() - config.bubbles.width;
+			a = b * Math.tan(angle);
+			y = image.getY() - a;
 
 			point = {
 				x: config.ballsField.topRight.x - config.bubbles.width,
 				y: y};
 		} else {
-			var b = image.getX() - config.ballsField.topLeft.x;
-			var a = b * Math.tan(angle);
-			var y = image.getY() - a;
+			b = image.getX() - config.ballsField.topLeft.x;
+			a = b * Math.tan(angle);
+			y = image.getY() - a;
 
 			point = {
 				x: config.ballsField.topLeft.x,

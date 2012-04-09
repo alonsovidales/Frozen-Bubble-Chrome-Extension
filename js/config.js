@@ -55,7 +55,7 @@ var config = {
 		width: 100,
 		height: 100,
 		maxRotationDegLeft: -70,
-		maxRotationDegRight: 70,
+		maxRotationDegRight: 70
 	},
 
 	// The configuration for Player_Controller
@@ -150,7 +150,7 @@ var config = {
 		extensor: {
 			x: 233,
 			width: 188,
-			height: 28,
+			height: 28
 		}
 	},
 
