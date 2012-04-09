@@ -340,10 +340,25 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 			}
 		},
 
+		/**
+		  * This method is used for debug propouses, and adds a
+		  * text over the image
+		  *
+		  * @param inText <str>: The text to be added
+		  *
+		  */
 		setText: function(inText) {
 			divElm.innerHTML = inText;
 		},
 
+		/**
+		  * Moves an element to a determinate position, the given point will be the top
+		  * left corner of the element
+		  *
+		  * @param inX <int>: The position in pixels of the X axe from the origin
+		  * @param inY <int>: The position in pixels of the Y axe from the origin
+		  *
+		  */
 		setPos: function(inX, inY) {
 			curentX = inX;
 			curentY = inY;
@@ -351,10 +366,39 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 			divElm.style.setProperty('left', inX + 'px', '!important');
 		},
 
+		/**
+		  * This method adds a CSS class to the div element
+		  *
+		  * @param inNewClass <str>: The name of the CSS class to add
+		  *
+		  */
 		setClass: function(inNewClass) {
 			divElm.classList.add(inNewClass);
 		},
 
+		/**
+		  * This method creates an animation using a sequence of images of
+		  * the spreadsheet
+		  *
+		  * @param inParams <object>: An object with the animation parameters,
+		  *	the object can contain the next keys:
+		  *		- type <str>: The type of the animation, can be loop (after
+		  *			the end of the sequence change the way of the play
+		  * 			sequence) or circle (after the end of the sequence
+		  *			rewind to the first image), is is not specify play the
+		  *			sequence once
+		  *		- from <int>: The position into the spreadsheet to be played
+		  *			as the first image of the sequence if is not specify
+		  *			takes 1 as value
+		  *		- to <int>: The position into the spreadsheet to be played
+		  *			as the last image of the sequence if is not specify
+		  *			takes the last image as value
+		  *		- callback <function>: Function to call after the sequence
+		  *			ends if type is nos specify
+		  *		- localTimeInterval <int>: The time in miliseconds to leave
+		  *			between the images are showed to the user
+		  *
+		  */
 		animate: function(inParams) {
 			this.stopAnimation();
 
@@ -381,24 +425,53 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 				endAnimationCallBack = inParams.callback;
 			}
 
+			// Launch the internal method who creates the animation
 			animateFrame();
 		},
 
+		/**
+		  * This method rotates the image the given number of degrees from the origin
+		  * using the CSS -webkit-transform style
+		  *
+		  * @param inDeg <int>: The number of degrees to rotate the element
+		  *
+		  */
 		rotate: function(inDeg) {
 			divElm.style.setProperty('-webkit-transform', 'rotate(' + inDeg + 'deg)', '!important');
 		},
 
+		/**
+		  * This method stops all the animations if any animation is in course
+		  * and leaves the element with the las image showed
+		  *
+		  */
 		stop: function() {
 			movingTo = false;
 			clearTimeout(moveInfo.movingLoop);
 		},
 
+		/**
+		  * This method moves to a determinate position the element in a straight movement
+		  * doing an animation (slide).
+		  * 
+		  * @param inX <int>: The target position in pexels over the X axe from the origin
+		  * @param inY <int>: The target position in pexels over the Y axe from the origin
+		  * @param inLoopTime <int>: The time in miliseconds between steeps
+		  * @param inCallBack <function>: The callback function to be called when the elemnt
+		  *	are in the target position
+		  * @param inSteepPx <int>: The number of pixels that the element will be moved each steep
+		  * @param inSteepCheckFunc optional <function>: A function to be called after each steep
+		  * @param inSteepCheckFuncObj optional <object>: A object to be passed as first parameter
+		  *	to the inSteepCheckFunc function
+		  *
+		  */
 		moveTo: function(inX, inY, inLoopTime, inCallBack, inSteepPx, inSteepCheckFunc, inSteepCheckFuncObj) {
 			movingTo = true;
 			if ((moveInfo !== null) && (moveInfo.movingLoop !== undefined)) {
 				clearTimeout(moveInfo.movingLoop);
 			}
 
+			// Configure the internal method
 			moveInfo = {
 				origTan: getTangent(curentX, curentY, inX, inY),
 				targetX: inX,
@@ -409,9 +482,15 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 				steepCheckFuncObj: inSteepCheckFuncObj,
 				endMovCallback: inCallBack};
 
+			// Call to the internal method who moves the element using a timeout loop
                         moveLoop();
 		},
 
+		/**
+		  * Stop the current animation of the element, and set the main image as image to show
+		  * after that.
+		  * 
+		  */
 		stopAnimation: function() {
 			if (animationLoop !== null) {
 				currentPos = inStartPosition;
@@ -424,6 +503,11 @@ var AnimatedImage_Tool = (function(inClass, inStartPosition, inTimeInterval, inN
 			}
 		},
 
+		/**
+		  * Init method to be called after the element object is created, and all is ready to draw the element.
+		  * creates the div element where the animation will be displayed, and adds the corresponding class.
+		  * 
+		  */
 		init: function() {
 			var mainCanvas = document.getElementById(config.gameCanvas.id);
 
