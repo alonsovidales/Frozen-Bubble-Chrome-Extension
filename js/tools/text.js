@@ -1,4 +1,26 @@
+/**
+  * Author: Alonso Vidales <alonso.vidales@tras2.es>
+  * Date: 2012-03-26
+  *
+  * This class is used to create funny texts using the special font of the game
+  * the font is taked from the corresponding spreadsheet
+  *
+  * @see css/styles.css classes:
+  *	font
+  *	font.hi
+  *	font.char
+  *
+  * @param inText <str>: The text to create in lower case
+  * @param inFontType optional <str>: The type of font to use (subclass in css), by
+  *	default is char
+  *
+  */
 var Text_Tool = (function (inText, inFontType){
+	/**
+	  * This object containt the width and forsition of each letter into the
+	  * spreadsheet image specified in pixels
+	  *
+	  */
 	var letters = {
 		a: {
 			x: 526,
@@ -114,10 +136,19 @@ var Text_Tool = (function (inText, inFontType){
 		' ': {
 			width: 5}};
 
+	// Will continat the main div of the text created in order to move, remove, etc all
+	// the sub-divs that represents the letters
 	var containerDiv = null;
-	var textLetters = [];
+	// The current position on the X axe to draw the next character
 	var leftPadPx = 0;
 
+	/**
+	  * This method adds a leter to the main div that contents all the letters
+	  * The character shouldbe a key of the letters object
+	  *
+	  * @param inChar <char>: The character to add
+	  *
+	  */
 	var addLetter = function(inChar) {
 		var divElm = document.createElement("div");
 		divElm.classList.add('font');
@@ -139,13 +170,31 @@ var Text_Tool = (function (inText, inFontType){
 		containerDiv.appendChild(divElm);
 	};
 
+	// Public scope
 	return {
+		/**
+		  * This method adds the click event to the main div that calls to the
+		  * give function.
+		  * Adds too the class "text_link" to the div that should contain the
+		  * cursor: pointer; style
+		  *
+		  * @see css/styles.css file: text_link class
+		  * @param inFunction <function>: The function to be called when the
+		  *	user do click over the main div element
+		  *
+		  */
 		addLink: function(inFunction) {
 			containerDiv.classList.add('text_link');
-
 			containerDiv.addEventListener('click', inFunction);
 		},
 
+		/**
+		  * This method creates letter by letter the text to show
+		  * If a previous text is set, remove the text before create the new one
+		  *
+		  * @param inText <str>: The text to draw in lower case
+		  *
+		  */
 		setText: function(inText) {
 			containerDiv.innerHTML = '';
 			leftPadPx = 0;
@@ -155,6 +204,15 @@ var Text_Tool = (function (inText, inFontType){
 			}
 		},
 
+		/**
+		  * The method initialize all the elements to represent the text, and create the
+		  * main container div into the given position
+		  * If a text was specify as a paremeter of the constructor, add the text after create the div
+		  *
+		  * @param inX <int>: The position in pixel of the X axe where the main div will be created
+		  * @param inY <int>: The position in pixel of the Y axe where the main div will be created
+		  *
+		  */
 		init: function(inX, inY) {
 			var mainCanvas = document.getElementById(config.gameCanvas.id);
 			containerDiv = document.createElement("div");
@@ -165,6 +223,7 @@ var Text_Tool = (function (inText, inFontType){
 
 			mainCanvas.appendChild(containerDiv);
 
+			// Add the text specify on the constructor
 			if (inText !== undefined) {
 				this.setText(inText);
 			}
