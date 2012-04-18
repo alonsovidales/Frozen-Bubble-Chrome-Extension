@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3275E966153F4B28000C5EB3 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 3275E965153F4B28000C5EB3 /* src */; };
 		32796EA6153F393B00012384 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32796EA5153F393B00012384 /* UIKit.framework */; };
 		32796EA8153F393B00012384 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32796EA7153F393B00012384 /* Foundation.framework */; };
 		32796EAA153F393B00012384 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32796EA9153F393B00012384 /* CoreGraphics.framework */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3275E965153F4B28000C5EB3 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../src; sourceTree = "<group>"; };
 		32796EA1153F393B00012384 /* Frozen Bubble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Frozen Bubble.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32796EA5153F393B00012384 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32796EA7153F393B00012384 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -77,6 +79,7 @@
 		32796EAB153F393B00012384 /* Frozen Bubble */ = {
 			isa = PBXGroup;
 			children = (
+				3275E965153F4B28000C5EB3 /* src */,
 				32796EB4153F393B00012384 /* AppDelegate.h */,
 				32796EB5153F393B00012384 /* AppDelegate.m */,
 				32796EB7153F393B00012384 /* ViewController.h */,
@@ -150,6 +153,7 @@
 			files = (
 				32796EB0153F393B00012384 /* InfoPlist.strings in Resources */,
 				32796EBC153F393B00012384 /* ViewController.xib in Resources */,
+				3275E966153F4B28000C5EB3 /* src in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +278,7 @@
 				32796EC1153F393B00012384 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

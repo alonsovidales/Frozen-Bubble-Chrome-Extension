@@ -16,7 +16,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index_iphone" ofType:@"html"]isDirectory:FALSE]]];
+    
+	[webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index_iphone" ofType:@"html" inDirectory:@"src"]isDirectory:false]]];
 }
 
 - (void)viewDidUnload
