@@ -78,7 +78,7 @@ var UserAlerts_Tool = (function() {
 			mainCanvas.appendChild(divElm);
 
 			var xPos = (window.innerWidth / 2) - (divElm.offsetWidth / 2);
-			divElm.style.setProperty('left', xPos + 'px', '!important');
+			divElm.style.setProperty('left', xPos + 'px');
 
 			if (inFlash) {
 				imageShowed = true;

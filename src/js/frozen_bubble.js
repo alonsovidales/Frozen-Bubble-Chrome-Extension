@@ -22,3 +22,5 @@ var FrozenBubble = (function() {
 		}
 	};
 })();
+
+FrozenBubble.bootstrap();

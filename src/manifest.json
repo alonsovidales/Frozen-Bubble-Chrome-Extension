@@ -1,7 +1,8 @@
 {
 	"name": "Frozen Bubble",
+        "manifest_version": 2,
 	"description": "Frozen Bubble is a free software Puzzle Bobble style computer game. This is a little version of the game based on HTML5",
-	"version": "1.0.0.0",
+	"version": "1.0.0.5",
 	"icons": {
 		"16": "img/icons/frozen_16_16.png",
 		"32": "img/icons/frozen_32_32.png",

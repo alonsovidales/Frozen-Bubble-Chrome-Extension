@@ -159,10 +159,10 @@ var Text_Tool = (function (inText, inFontType){
 			} else {
 				divElm.classList.add('char');
 			}
-			divElm.style.setProperty('background-position', '-' + letters[inChar].x + 'px -1px', '!important');
+			divElm.style.setProperty('background-position', '-' + letters[inChar].x + 'px -1px');
 		}
 
-		divElm.style.setProperty('left', leftPadPx + 'px', '!important');
+		divElm.style.setProperty('left', leftPadPx + 'px');
 		divElm.style.setProperty('width', letters[inChar].width + 'px');
 		divElm.style.setProperty('height', '27px');
 		leftPadPx += letters[inChar].width;
@@ -218,8 +218,8 @@ var Text_Tool = (function (inText, inFontType){
 			containerDiv = document.createElement("div");
 
 			containerDiv.style.setProperty('position', 'absolute');
-			containerDiv.style.setProperty('left', inX + 'px', '!important');
-			containerDiv.style.setProperty('top', inY + 'px', '!important');
+			containerDiv.style.setProperty('left', inX + 'px');
+			containerDiv.style.setProperty('top', inY + 'px');
 
 			mainCanvas.appendChild(containerDiv);
 
