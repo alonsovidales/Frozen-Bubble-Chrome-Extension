@@ -143,16 +143,20 @@ var Player_Controller = (function(inCompressor) {
 	};
 
 	/**
-	  * This method creates and a new Bullble_Controller object and
+	  * This method creates and a new Bubble_Controller object and
 	  * adds it to the chamber
 	  *
 	  */
 	var addNewBubbleToChamber = function() {
+		var colours = compressor.getBubbleColours();
+		var type = colours[Math.floor(Math.random() * (colours.length - 1))];
+
 		shooterBall = chamberBubble;
 
-		chamberBubble = new Bullble_Controller(
+		chamberBubble = new Bubble_Controller(
 			0,
-			config.shooter.top + config.shooter.height - 10);
+			config.shooter.top + config.shooter.height - 10,
+			type);
 
 		chamberBubble.init();
 

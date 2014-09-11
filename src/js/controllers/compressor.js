@@ -79,7 +79,7 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc, inGameControlle
 		  * Check if a bubble crash against any of the bubbles of the grid, or the compressor
 		  * and adds the bubble to the bubbles grid in this case
 		  *
-		  * @param inBubble <object>: The Bullble_Controller object to be checked
+		  * @param inBubble <object>: The Bubble_Controller object to be checked
 		  *
 		  */
 		checkCollision: function(inBubble) {
@@ -91,6 +91,14 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc, inGameControlle
 
 				bubblesGrid.addBubble(inBubble, bubbleCollision);
 			}
+		},
+
+		/**
+		  * This method returns the list of available bubble colours
+		  *
+		  */
+		getBubbleColours: function() {
+			return bubblesGrid.getBubbleColours();
 		},
 
 		/**
@@ -117,7 +125,7 @@ var Compressor_Controller = (function(inWinFunc, inGameOverFunc, inGameControlle
 			var bubbles = levels[inLevel];
 			for (bubble in bubbles) {
 				if (bubbles.hasOwnProperty(bubble)) {
-					bubbles[bubble].bubble = new Bullble_Controller(
+					bubbles[bubble].bubble = new Bubble_Controller(
 						config.windowConf.width / 2,
 						config.windowConf.width / 2);
 				}

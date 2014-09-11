@@ -6,7 +6,7 @@
   * at the bottom of the compressor
   *
   * @see config.bubblesGrid
-  * @see Bullble_Controller
+  * @see Bubble_Controller
   *
   * @param inWinFunc <function>: The function to be called if is detected that
   *	the user wins the game
@@ -92,7 +92,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 	  *	{
 	  *		row: <int>, // The row where the bubble is allocated
 	  *		col: <int>, // The column where the bubble is allocated
-	  *		bubble: <object> // Bullble_Controller object that represents the bubble }
+	  *		bubble: <object> // Bubble_Controller object that represents the bubble }
 	  * @param inRightCheck <bool>: If true check if the bubble is supported by the right, if false by the left
 	  *
 	  * @return <bool>: Returns true if the bubble is supported, false if not
@@ -125,7 +125,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 	  *	{
 	  *		row: <int>, // The row where the bubble is allocated
 	  *		col: <int>, // The column where the bubble is allocated
-	  *		bubble: <object> // Bullble_Controller object that represents the bubble }
+	  *		bubble: <object> // Bubble_Controller object that represents the bubble }
 	  * @param inRightCheck <bool>: If true check if the bubble is supported by the right, if false by the left
 	  *
 	  * @return <bool>: Returns true if the bubble is supported, false if not
@@ -171,7 +171,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 	  *		{
 	  *			row: <int>, // The row where the bubble is allocated
 	  *			col: <int>, // The column where the bubble is allocated
-	  *			bubble: <object> // Bullble_Controller object that represents the bubble }
+	  *			bubble: <object> // Bubble_Controller object that represents the bubble }
 	  *
 	  * @return <object>: An object of objects with the same structure as inBubbleInfo and with
 	  *	[row + '-' + col] as key
@@ -212,7 +212,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 	  *		{
 	  *			row: <int>, // The row where the bubble is allocated
 	  *			col: <int>, // The column where the bubble is allocated
-	  *			bubble: <object> // Bullble_Controller object that represents the bubble }
+	  *			bubble: <object> // Bubble_Controller object that represents the bubble }
 	  *
 	  * @return <bool>: True if is out, or false if not
 	  *
@@ -229,7 +229,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 	  *		{
 	  *			row: <int>, // The row where the bubble is allocated
 	  *			col: <int>, // The column where the bubble is allocated
-	  *			bubble: <object> // Bullble_Controller object that represents the bubble }
+	  *			bubble: <object> // Bubble_Controller object that represents the bubble }
 	  * @param inSlice <bool>: True if the bubble should be moves slicing, or is a direct movement
 	  * @param inCheckGroup <bool>: True if should be checked if exist any group (user added bubble) or false
 	  *	if shouldn't be checked (added by the system at the begging of the level)
@@ -287,7 +287,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		  * This method check if a given bubble crash againsth the bubbles grid
 		  * and returns true in that case
 		  *
-		  * @param inBubble <object>: The Bullble_Controller object to be checked
+		  * @param inBubble <object>: The Bubble_Controller object to be checked
 		  *
 		  * @return <bool>: True if exists a collision, false if not
 		  *
@@ -306,7 +306,7 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 		  * This method add a bubble to the corresponding cell after a collision
 		  * with another bubble is detected
 		  *
-		  * @param inBubble <object>: The Bullble_Controller object to be checked
+		  * @param inBubble <object>: The Bubble_Controller object to be checked
 		  * @param inParentBubble <object>: The bubble who the bubble to add has creashed
 		  *
 		  */
@@ -380,6 +380,22 @@ var BubblesGrid_Controller = (function(inWinFunc, inGameOverFunc, inGameControll
 					break;
 				}
 			}
+		},
+
+		/**
+		  * This method returns the list of available bubble colours
+		  *
+		  */
+		getBubbleColours: function() {
+			colours = {};
+			for (bubble in bubbles) {
+				if (bubbles.hasOwnProperty(bubble)) {
+					var type = bubbles[bubble].bubble.getType();
+					colours[type] = true;
+				}
+			}
+
+			return Object.keys(colours);
 		},
 
 		/**

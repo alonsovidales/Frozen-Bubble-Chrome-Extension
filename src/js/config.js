@@ -121,7 +121,7 @@ var config = {
 		rotationSpeedLoop: 8
 	},
 
-	// Configuration parameters for Bullble_Controller
+	// Configuration parameters for Bubble_Controller
 	// @see img/bubbles/bubbles.gif
 	bubbles: {
 		// The total number of different bubbles color

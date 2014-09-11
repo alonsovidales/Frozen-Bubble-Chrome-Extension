@@ -13,7 +13,7 @@
   * @param inType <int>: The type of the  bubble to create
   *
   */
-var Bullble_Controller = (function(inX, inY, inType) {
+var Bubble_Controller = (function(inX, inY, inType) {
 	// Will contain the image, @see AnimatedImage_Tool
 	var image = null;
 	// The type as a integer of the bubble (the color)
